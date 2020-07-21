@@ -15,4 +15,4 @@ collections:
         widget: string
       - label: Body
         name: body
-        widget: text
+        widget: markdown

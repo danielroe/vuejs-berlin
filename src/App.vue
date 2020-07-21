@@ -1,28 +1,32 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <header>
+      {{ title }}
+    </header>
+    <component :is="page" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Poll from './components/Poll.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  data: () => ({
+    page: null,
+    title: null,
+  }),
+  created() {
+    const pathname = window.location.pathname.slice(1)
+    this.page = () =>
+      import(`./content/${pathname}.md`).then(({ attributes, vue }) => {
+        this.title = attributes.title
+        return { extends: vue.component, components: { Poll } }
+      })
+  },
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import 'https://newcss.net/lite.css';
 </style>
