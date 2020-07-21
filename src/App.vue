@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <header>
-      {{ title }}
+      <h1>
+        {{ title }}
+      </h1>
     </header>
     <component :is="page" />
   </div>
@@ -19,14 +21,20 @@ export default {
   created() {
     const pathname = window.location.pathname.slice(1)
     this.page = () =>
-      import(`./content/${pathname}.md`).then(({ attributes, vue }) => {
-        this.title = attributes.title
-        return { extends: vue.component, components: { Poll } }
-      })
+      import(`./content/${pathname || 'index'}.md`).then(
+        ({ attributes, vue }) => {
+          this.title = attributes.title
+          return { extends: vue.component, components: { Poll } }
+        }
+      )
   },
 }
 </script>
 
 <style>
 @import 'https://newcss.net/lite.css';
+:root {
+  --nc-bg-1: #2d3748;
+  --nc-bg-2: #1a202c;
+}
 </style>

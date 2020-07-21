@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p>
+    <h3 v-if="title">
       {{ title }}
-    </p>
+    </h3>
     <template v-if="vote">
       You voted for {{ vote }}.
       <button @click="vote = ''">
